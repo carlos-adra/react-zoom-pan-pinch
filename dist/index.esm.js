@@ -240,26 +240,17 @@ function getComponentsSizes(wrapperComponent, contentComponent, newScale) {
     };
 }
 var getBounds = function (wrapperWidth, newContentWidth, diffWidth, wrapperHeight, newContentHeight, diffHeight, centerZoomedOut) {
-    var scaleWidthFactor = wrapperWidth > newContentWidth
-        ? diffWidth * (centerZoomedOut ? 1 : 0.5)
-        : 0;
-    var scaleHeightFactor = wrapperHeight > newContentHeight
-        ? diffHeight * (centerZoomedOut ? 1 : 0.5)
-        : 0;
-    var minPositionX = wrapperWidth - newContentWidth - scaleWidthFactor;
-    var maxPositionX = scaleWidthFactor;
-    var minPositionY = wrapperHeight - newContentHeight - scaleHeightFactor;
-    var maxPositionY = scaleHeightFactor;
-    return { minPositionX: minPositionX, maxPositionX: maxPositionX, minPositionY: minPositionY, maxPositionY: maxPositionY };
+    return { minPositionX: -50000, maxPositionX: 50000, minPositionY: -50000, maxPositionY: 50000 };
+    // return { minPositionX, maxPositionX, minPositionY, maxPositionY };
 };
 var calculateBounds = function (contextInstance, newScale) {
     var wrapperComponent = contextInstance.wrapperComponent, contentComponent = contextInstance.contentComponent;
-    var centerZoomedOut = contextInstance.setup.centerZoomedOut;
+    contextInstance.setup.centerZoomedOut;
     if (!wrapperComponent || !contentComponent) {
         throw new Error("Components are not mounted");
     }
-    var _a = getComponentsSizes(wrapperComponent, contentComponent, newScale), wrapperWidth = _a.wrapperWidth, wrapperHeight = _a.wrapperHeight, newContentWidth = _a.newContentWidth, newDiffWidth = _a.newDiffWidth, newContentHeight = _a.newContentHeight, newDiffHeight = _a.newDiffHeight;
-    var bounds = getBounds(wrapperWidth, newContentWidth, newDiffWidth, wrapperHeight, newContentHeight, newDiffHeight, Boolean(centerZoomedOut));
+    getComponentsSizes(wrapperComponent, contentComponent, newScale);
+    var bounds = getBounds();
     return bounds;
 };
 var handleCalculateBounds = function (contextInstance, newScale) {
